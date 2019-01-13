@@ -102,9 +102,11 @@ void uploadData(char* buf)
   String buffer = String(buf);
   int commaIndex = buffer.indexOf(',');
   int secondCommaIndex = buffer.indexOf(',', commaIndex + 1);
+  int thirdCommaIndex = buffer.indexOf(',', secondCommaIndex + 1);
   String temperature_string = buffer.substring(0, commaIndex);
   String humidity_string = buffer.substring(commaIndex + 1, secondCommaIndex);
-  String Volt_string = buffer.substring(secondCommaIndex + 1);
+  String Volt_string = buffer.substring(secondCommaIndex + 1, thirdCommaIndex);
+  String Solarvolt_string = buffer.substring(thirdCommaIndex + 1);
 
   Console.println("Call Linux Command to Send Data");
   Process p; // Create a process and call it "p", this process will execute the script already on Linux
@@ -112,6 +114,7 @@ void uploadData(char* buf)
   p.addParameter(temperature_string); // Temperature
   p.addParameter(humidity_string); // Humidity
   p.addParameter(Volt_string); // Voltage
+  p.addParameter(Solarvolt_string); // Voltage for Solar Panel
   p.run(); // Run the process and wait for its termination
 
   Console.print("Feedback from Linux: ");
