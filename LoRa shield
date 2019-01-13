@@ -26,6 +26,8 @@ float frequency = 433.0;
 float vPow = 5.0;
 float r1 = 10000;
 float r2 = 1000;
+float sr1 = 20000;
+float sr2 = 2000;
 void setup()
 {
   Serial.begin(9600);
@@ -57,6 +59,8 @@ void loop()
   delay(2000); // Wait a few seconds between measurements, minimum 2000ms
   float h = dht.readHumidity();
   float t = dht.readTemperature();
+  float sv =(analogRead(1) * vPow) / 1023.0;
+  float sv1 = sv / (sr2 / (sr1 +sr2));
   float v = (analogRead(0) * vPow) / 1023.0;
   float v2 = v / (r2 / (r1 + r2));
   if (isnan(h) || isnan(t))
@@ -69,9 +73,11 @@ void loop()
   String tmp_buf = String(t);
   String hum_buf = String(h);
   String volt_buf = String(v2);
+  String Solarvolt_buff = String(sv1);
   String payload = tmp_buf + ",";
   payload = payload + hum_buf + ",";
-  payload = payload + volt_buf;
+  payload = payload + volt_buf + ",";
+  payload = payload + Solarvolt_buff;
 
   Serial.println(payload);
 
