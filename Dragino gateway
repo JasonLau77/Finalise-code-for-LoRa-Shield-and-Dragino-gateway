@@ -96,7 +96,7 @@ void loop()
     }
   }
 }
-
+// (Use the Link to learn how to do below parsing string: https://stackoverflow.com/questions/11068450/arduino-c-language-parsing-string-with-delimiter-input-through-serial-interfa) 
 void uploadData(char* buf)
 {
   String buffer = String(buf);
